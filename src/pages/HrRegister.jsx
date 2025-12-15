@@ -21,7 +21,7 @@ const HrRegister = () => {
 
                 {/* form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body px-5 md:px-10 mt-8">
-                    <div className="grid grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label>
                                 <span>Name</span>
