@@ -18,11 +18,10 @@ const Navbar = () => {
                             <li>
                                 <a>Join as Employee</a>
                                 <ul className="p-2">
-                                    <li><a>My Assets</a></li>
-                                    <li><a>My Team</a></li>
-                                    <li><a>Request Asset</a></li>
-                                    <li><a>Profile</a></li>
-                                    <li><a>Logout</a></li>
+                                    <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
+                                    <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
+                                    <li><NavLink to="/employeeDashboard/requestAsset">Request Asset</NavLink></li>
+                                    <li><NavLink to="/employeeDashboard/profile">Profile</NavLink></li>
                                 </ul>
                             </li>
                             <li>
@@ -50,11 +49,10 @@ const Navbar = () => {
                             <details>
                                 <summary>Join as Employee</summary>
                                 <ul className="p-2">
-                                    <li><a>My Assets</a></li>
-                                    <li><a>My Team</a></li>
-                                    <li><a>Request Asset</a></li>
-                                    <li><a>Profile</a></li>
-                                    <li><a>Logout</a></li>
+                                    <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
+                                    <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
+                                    <li><NavLink to="/employeeDashboard/requestAsset">Request Asset</NavLink></li>
+                                    <li><NavLink to="/employeeDashboard/profile">Profile</NavLink></li>
                                 </ul>
                             </details>
                         </li>

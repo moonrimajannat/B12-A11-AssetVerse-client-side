@@ -5,43 +5,31 @@ import { NavLink, Outlet } from "react-router";
 import { TiArrowForwardOutline } from "react-icons/ti";
 import { GrMenu } from "react-icons/gr";
 
-const HrDashboard = () => {
+const EmployeeDashboard = () => {
     const user = "Moon";
     const [sidebar, setSidebar] = useState(false)
 
     const navlinks = <>
         <li>
-            <NavLink to="/hrDashboard/assetList" className={({ isActive, isPending }) =>
+            <NavLink to="/employeeDashboard/myAssets" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> Asset List
+                <TiArrowForwardOutline className="text-xl inline"/> My Assets
             </NavLink>
         </li>
         <li>
-            <NavLink to="/hrDashboard/addAsset" className={({ isActive, isPending }) =>
+            <NavLink to="/employeeDashboard/myTeam" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> Add an Asset
+                <TiArrowForwardOutline className="text-xl inline"/> My Team
             </NavLink>
         </li>
         <li>
-            <NavLink to="/hrDashboard/allRequests" className={({ isActive, isPending }) =>
+            <NavLink to="/employeeDashboard/requestAsset" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> All Requests
+                <TiArrowForwardOutline className="text-xl inline"/> Request an Asset
             </NavLink>
         </li>
         <li>
-            <NavLink to="/hrDashboard/employeeList" className={({ isActive, isPending }) =>
-                isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> My Employee List
-            </NavLink>
-        </li>
-        <li>
-            <NavLink to="/hrDashboard/upgradePackage" className={({ isActive, isPending }) =>
-                isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> Upgrade Package
-            </NavLink>
-        </li>
-        <li>
-            <NavLink to="/hrDashboard/profile" className={({ isActive, isPending }) =>
+            <NavLink to="/employeeDashboard/profile" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
                 <FaRegUser className="text-lg inline mb-2"/> Profile
             </NavLink>
@@ -104,4 +92,4 @@ const HrDashboard = () => {
     );
 };
 
-export default HrDashboard;
+export default EmployeeDashboard;

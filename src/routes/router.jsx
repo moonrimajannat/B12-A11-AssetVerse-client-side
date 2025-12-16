@@ -6,6 +6,7 @@ import EmployeeRegister from "../pages/EmployeeRegister";
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
 import HrDashboard from "../Layouts/HrDashboard";
+import EmployeeDashboard from "../Layouts/EmployeeDashboard";
 
 
 const router = createBrowserRouter([
@@ -62,6 +63,28 @@ const router = createBrowserRouter([
                 element: <Home/>
             },
 
+        ]
+    },
+    {
+        path: "employeeDashboard",
+        element: <EmployeeDashboard></EmployeeDashboard>,
+        children: [
+            {
+                path: "myAssets",
+                element: <Home/>
+            },
+            {
+                path: "myTeam",
+                element: <Home/>
+            },
+            {
+                path: "requestAsset",
+                element: <Home/>
+            },
+            {
+                path: "profile",
+                element: <Home/>
+            },
         ]
     },
 ]);

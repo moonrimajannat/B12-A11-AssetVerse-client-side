@@ -16,8 +16,8 @@ const Footer = () => {
                 <nav>
                     <h6 className="footer-title">Company</h6>
                     <a href="/" className="link link-hover">Home</a>
-                    <a href="/hrDashboard/assetList" className="link link-hover">Join as Employee</a>
-                    <a className="link link-hover">Join as HR Manager</a>
+                    <a href="employeeDashboard/myAssets" className="link link-hover">Join as Employee</a>
+                    <a href="/hrDashboard/assetList" className="link link-hover">Join as HR Manager</a>
                 </nav>
                 <nav>
                     <h6 className="footer-title">Social</h6>
