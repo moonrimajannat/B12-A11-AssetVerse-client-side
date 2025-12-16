@@ -5,6 +5,7 @@ import HrRegister from "../pages/HrRegister";
 import EmployeeRegister from "../pages/EmployeeRegister";
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
+import HrDashboard from "../Layouts/HrDashboard";
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,37 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login></Login>,
+            },
+
+        ]
+    },
+    {
+        path: "hrDashboard",
+        element: <HrDashboard></HrDashboard>,
+        children: [
+            {
+                path: "assetList",
+                element: <Home/>
+            },
+            {
+                path: "addAsset",
+                element: <Home/>
+            },
+            {
+                path: "allRequests",
+                element: <Home/>
+            },
+            {
+                path: "employeeList",
+                element: <Home/>
+            },
+            {
+                path: "upgradePackage",
+                element: <Home/>
+            },
+            {
+                path: "profile",
+                element: <Home/>
             },
 
         ]

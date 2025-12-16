@@ -28,11 +28,11 @@ const Navbar = () => {
                             <li>
                                 <a>Join as HR Manager</a>
                                 <ul className="p-2">
-                                    <li><a>Asset List</a></li>
-                                    <li><a>Add Asset</a></li>
-                                    <li><a>All Requests</a></li>
-                                    <li><a>Employee List</a></li>
-                                    <li><a>Profile</a></li>
+                                    <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/allRequests">All Requests</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/employeeList">Employee List</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/profile">Profile</NavLink></li>
                                     <li><a>Logout</a></li>
                                 </ul>
                             </li>
@@ -62,11 +62,11 @@ const Navbar = () => {
                             <details>
                                 <summary>Join as HR Manager</summary>
                                 <ul className="p-2">
-                                    <li><a>Asset List</a></li>
-                                    <li><a>Add Asset</a></li>
-                                    <li><a>All Requests</a></li>
-                                    <li><a>Employee List</a></li>
-                                    <li><a>Profile</a></li>
+                                    <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/allRequests">All Requests</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/employeeList">Employee List</NavLink></li>
+                                    <li><NavLink to="/hrDashboard/profile">Profile</NavLink></li>
                                     <li><a>Logout</a></li>
                                 </ul>
                             </details>
