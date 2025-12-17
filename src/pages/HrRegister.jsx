@@ -1,15 +1,70 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdError } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { AuthContext } from "../AuthProvider/AuthContext";
+import Swal from "sweetalert2";
+
+//img upload
+const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 
 const HrRegister = () => {
+    const { createUser } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        console.log(data);
+        const { name, companyName, image, dateOfBirth, role, packageLimit, currentEmployees, subscription, email, password } = data;
+
+        createUser(email, password)
+            .then(async (result) => {
+
+                // Upload image to ImgBB
+                const formData = new FormData();
+                formData.append("image", image[0]);
+
+                const imgResponse = await axiosPublic.post(img_hosting_api, formData, {
+                    headers: { "content-type": "multipart/form-data" },
+                });
+
+                if (!imgResponse.data.success) {
+                    throw new Error("Image upload failed");
+                }
+
+                const imageUrl = imgResponse.data.data.display_url;
+
+                const userInfo = {
+                    name: name,
+                    companyName: companyName,
+                    companyLogo: imageUrl,
+                    email: email,
+                    password: password,
+                    dateOfBirth: dateOfBirth,
+                    role: role,
+                    packageLimit: parseInt(packageLimit),
+                    currentEmployees: parseInt(currentEmployees),
+                    subscription: subscription,
+                }
+                const usersCreate = await axiosPublic.post("/users", userInfo);
+                console.log(usersCreate.data);
+
+                if (usersCreate.data) {
+                    Swal.fire("Great!", "Registration have completed successfully.", "success");
+
+                    navigate("/");
+                }
+
+                reset();
+            })
+            .catch(error => {
+                console.error("Sign-up error:", error);
+                Swal.fire("Opps!", error.message, "error");
+            })
     };
 
     return (
@@ -46,10 +101,10 @@ const HrRegister = () => {
 
                         <div>
                             <label>
-                                <span>Photo URL</span>
+                                <span>Company Logo</span>
                             </label>
                             <div>
-                                <input type="file" {...register("image", { required: true })} name="image" placeholder="Company Logo" className="border-2 px-3 py-2 w-full border-blue-300 rounded-lg my-2 focus:outline-none " />
+                                <input type="file" {...register("image", { required: true })} name="image" placeholder="your photo url" className="border-2 px-3 py-2 w-full border-blue-300 rounded-lg my-2 focus:outline-none " />
                                 {errors.image && <span className="text-sm text-red-500"><MdError className="mb-0.5 inline" /> Image field is required.</span>}
                             </div>
                         </div>
