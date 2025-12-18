@@ -1,15 +1,47 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdError } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { AuthContext } from "../AuthProvider/AuthContext";
+import Swal from "sweetalert2";
 
 const EmployeeRegister = () => {
+    const { createUser } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const navigate = useNavigate();
 
-    const onSubmit = async (data) => {
-        console.log(data);
+     const onSubmit = async (data) => {
+        const { name, dateOfBirth, role, email, password } = data;
+
+        createUser(email, password)
+            .then(async (result) => {
+
+                const userInfo = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    dateOfBirth: dateOfBirth,
+                    role: role,
+                }
+                const usersCreate = await axiosPublic.post("/users", userInfo);
+                console.log(usersCreate.data);
+
+                if (usersCreate.data) {
+                    Swal.fire("Great!", "Registration have completed successfully.", "success");
+
+                    navigate("/");
+                }
+
+                reset();
+            })
+            .catch(error => {
+                console.error("Sign-up error:", error);
+                Swal.fire("Opps!", error.message, "error");
+            })
     };
 
     return (
