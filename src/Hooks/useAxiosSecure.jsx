@@ -11,7 +11,6 @@ const axiosSecure = axios.create({
 const useAxiosSecure = () => {
     const { logOut } = useContext(AuthContext);
     const navigate = useNavigate();
-
     useEffect(() => {
         axiosSecure.interceptors.response.use(res => {
             return res;
