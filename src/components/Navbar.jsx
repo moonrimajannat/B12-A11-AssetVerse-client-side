@@ -74,7 +74,9 @@ const Navbar = () => {
 
                 {/* login register  */}
                 <div className="navbar-end">
-                    <button className="btn btn-outline btn-info mr-3">Login</button>
+                    <Link to="/login" className="btn btn-outline btn-info mr-3">
+                        Login
+                    </Link>
 
                     <div className="dropdown dropdown-end mr-3">
                         <div tabIndex={0} role="button" className="btn btn-info m-1">Register</div>
