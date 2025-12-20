@@ -1,4 +1,5 @@
 import AboutSection from "../components/AboutSection";
+import FeaturesShowcase from "../components/FeaturesShowcase";
 import HeroBanner from "../components/HeroBanner";
 import PackagesSection from "../components/PackagesSection";
 
@@ -8,6 +9,7 @@ const Home = () => {
       <HeroBanner />
       <AboutSection />
       <PackagesSection />
+      <FeaturesShowcase/>
     </div>
   );
 };
