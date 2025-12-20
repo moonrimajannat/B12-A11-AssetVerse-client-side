@@ -3,7 +3,7 @@ import heroImg from "../assets/hero-banner.jpg";
 
 const HeroBanner = () => {
   return (
-    <section className="w-full bg-gray-50 py-20">
+    <section className="w-full bg-gray-50 lg:mb-20 py-20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid lg:grid-cols-2 gap-10 items-center">
 
         {/* Left Content */}

@@ -27,8 +27,6 @@ const Navbar = () => {
         fetchUserData();
     }, [user, axiosPublic]);
 
-    console.log(userData?.role);
-
     const handleLogOut = () => {
         logOut()
             .then(() => {
