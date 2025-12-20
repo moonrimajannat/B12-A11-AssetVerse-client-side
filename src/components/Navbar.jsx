@@ -1,14 +1,33 @@
 import { Link, NavLink, useNavigate } from "react-router";
 import logo from "../assets/logo.png"
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthContext";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
 
-    console.log(user);
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        if (!user?.email) return;
+
+        const fetchUserData = async () => {
+            try {
+                const res = await axiosPublic.get(`/users/${user?.email}`);
+                setUserData(res.data);
+            } catch (err) {
+                console.error("Error fetching user data:", err);
+            }
+        };
+
+        fetchUserData();
+    }, [user, axiosPublic]);
+
+    console.log(userData?.role);
 
     const handleLogOut = () => {
         logOut()
@@ -32,85 +51,79 @@ const Navbar = () => {
                             tabIndex="-1"
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             <li><NavLink to="/">Home</NavLink></li>
+                            {/* Employee Menu*/}
                             <li>
-                                <a>Join as Employee</a>
-                                <ul className="p-2">
-                                    <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
-                                    <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
-                                    <li><NavLink to="/employeeDashboard/requestAsset">Request Asset</NavLink></li>
-                                    <li><NavLink to="/employeeDashboard/profile">Profile</NavLink></li>
-                                    {
-                                        user ? (
-                                            <li><button onClick={handleLogOut}>
-                                                Log Out
-                                            </button></li>
-                                        ) : ""
-                                    }
-                                </ul>
+                                <Link>Join as Employee</Link>
+                                {userData?.role === "employee" && (
+                                    <ul className="p-2">
+                                        <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
+                                        <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
+                                        <li><NavLink to="/employeeDashboard/requestAsset">Request Asset</NavLink></li>
+                                        <li><NavLink to="/employeeDashboard/profile">Profile</NavLink></li>
+                                        {user && <li><button onClick={handleLogOut}>Log Out</button></li>}
+                                    </ul>
+                                )}
                             </li>
+
+                            {/* HR Menu */}
                             <li>
-                                <a>Join as HR Manager</a>
-                                <ul className="p-2">
-                                    <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/allRequests">All Requests</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/employeeList">Employee List</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/profile">Profile</NavLink></li>
-                                    {
-                                        user ? (
-                                            <li><button onClick={handleLogOut}>
-                                                Log Out
-                                            </button></li>
-                                        ) : ""
-                                    }
-                                </ul>
+                                <Link>Join as HR Manager</Link>
+                                {userData?.role === "hr" && (
+                                    <ul className="p-2">
+                                        <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
+                                        <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>
+                                        <li><NavLink to="/hrDashboard/allRequests">All Requests</NavLink></li>
+                                        <li><NavLink to="/hrDashboard/employeeList">Employee List</NavLink></li>
+                                        <li><NavLink to="/hrDashboard/profile">Profile</NavLink></li>
+                                        {user && <li><button onClick={handleLogOut}>Log Out</button></li>}
+                                    </ul>
+                                )}
                             </li>
                         </ul>
                     </div>
                     <Link to="/"><img className="w-[82px]" src={logo} alt="logo" /></Link>
                 </div>
 
-
                 {/* Desktop  */}
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         <li><NavLink to="/">Home</NavLink></li>
+
+                        {/* Employee Menu */}
                         <li>
                             <details>
                                 <summary>Join as Employee</summary>
-                                <ul className="p-2">
-                                    <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
-                                    <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
-                                    <li><NavLink to="/employeeDashboard/requestAsset">Request Asset</NavLink></li>
-                                    <li><NavLink to="/employeeDashboard/profile">Profile</NavLink></li>
-                                    {
-                                        user ? (
-                                            <li><button onClick={handleLogOut}>
-                                                Log Out
-                                            </button></li>
-                                        ) : ""
-                                    }
-                                </ul>
+                                {userData?.role === "employee" && (
+                                    <ul className="p-2">
+                                        <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
+                                        <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
+                                        <li><NavLink to="/employeeDashboard/requestAsset">Request Asset</NavLink></li>
+                                        <li><NavLink to="/employeeDashboard/profile">Profile</NavLink></li>
+                                        {user && (
+                                            <li><button onClick={handleLogOut}>Log Out</button></li>
+                                        )}
+                                    </ul>
+                                )}
                             </details>
                         </li>
+
+                        {/* HR Menu */}
                         <li>
                             <details>
                                 <summary>Join as HR Manager</summary>
-                                <ul className="p-2">
-                                    <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/allRequests">All Requests</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/employeeList">Employee List</NavLink></li>
-                                    <li><NavLink to="/hrDashboard/profile">Profile</NavLink></li>
-
-                                    {
-                                        user ? (
-                                            <li><button onClick={handleLogOut}>
-                                                Log Out
-                                            </button></li>
-                                        ) : ""
-                                    }
-                                </ul>
+                                {
+                                    userData?.role === "hr" && (
+                                        <ul className="p-2">
+                                            <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
+                                            <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>
+                                            <li><NavLink to="/hrDashboard/allRequests">All Requests</NavLink></li>
+                                            <li><NavLink to="/hrDashboard/employeeList">Employee List</NavLink></li>
+                                            <li><NavLink to="/hrDashboard/profile">Profile</NavLink></li>
+                                            {user && (
+                                                <li><button onClick={handleLogOut}>Log Out</button></li>
+                                            )}
+                                        </ul>
+                                    )}
                             </details>
                         </li>
                     </ul>
@@ -129,8 +142,8 @@ const Navbar = () => {
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-info m-1">Register</div>
                         <ul tabIndex="-1" className="dropdown-content menu bg-blue-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                            <NavLink to="/hr-register"><li><a>HR</a></li></NavLink>
-                            <NavLink to="/employee-register"><li><a>Employee</a></li></NavLink>
+                            <NavLink to="/hr-register"><li><Link>HR</Link></li></NavLink>
+                            <NavLink to="/employee-register"><li><Link>Employee</Link></li></NavLink>
                         </ul>
                     </div>
                 </div>
