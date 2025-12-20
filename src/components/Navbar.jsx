@@ -39,7 +39,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className="bg-base-100 shadow-sm">
+        <div className="bg-blue-100 shadow-sm">
             <div className="navbar max-w-[1380px] lg:mx-auto">
                 {/* Mobile  */}
                 <div className="navbar-start">
