@@ -1,4 +1,5 @@
 import AboutSection from "../components/AboutSection";
+import ContactCTA from "../components/ContactCTA";
 import FAQSection from "../components/FAQSection";
 import FeaturesShowcase from "../components/FeaturesShowcase";
 import HeroBanner from "../components/HeroBanner";
@@ -16,6 +17,7 @@ const Home = () => {
       <Testimonials />
       <HowItWorks />
       <FAQSection/>
+      <ContactCTA/>
     </div>
   );
 };
