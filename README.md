@@ -31,12 +31,15 @@ https://assetverse-46a0f.web.app
 
 ## 🔐Environment Variables Configuration
 
-VITE_IMAGE_HOSTING_KEY = your_imgbb_api_key
+# Image Hosting
+VITE_IMAGE_HOSTING_KEY=your_imgbb_api_key
 
-VITE_APIKEY = your_key
-VITE_AUTHDOMAIN = your_domain
-VITE_PROJECTID = your_project_id
-VITE_STORAGEBUCKET = your_bucket
-VITE_MESSAGINGSENDERID = your_id
-VITE_APPID = your_app_id
+# Firebase Configuration
+VITE_APIKEY=your_key
+VITE_AUTHDOMAIN=your_domain
+VITE_PROJECTID=your_project_id
+VITE_STORAGEBUCKET=your_bucket
+VITE_MESSAGINGSENDERID=your_id
+VITE_APPID=your_app_id
+
 
