@@ -1,6 +1,8 @@
 import AboutSection from "../components/AboutSection";
+import FAQSection from "../components/FAQSection";
 import FeaturesShowcase from "../components/FeaturesShowcase";
 import HeroBanner from "../components/HeroBanner";
+import HowItWorks from "../components/HowItWorks";
 import PackagesSection from "../components/PackagesSection";
 import Testimonials from "../components/Testimonials";
 
@@ -10,8 +12,10 @@ const Home = () => {
       <HeroBanner />
       <AboutSection />
       <PackagesSection />
-      <FeaturesShowcase/>
-      <Testimonials/>
+      <FeaturesShowcase />
+      <Testimonials />
+      <HowItWorks />
+      <FAQSection/>
     </div>
   );
 };
