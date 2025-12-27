@@ -59,18 +59,18 @@ const HrDashboard = () => {
     </>
 
     return (
-        <div className="flex bg-blue-100 lg:p-0 p-5">
+        <div className="flex lg:p-0 p-5">
             <div className="absolute z-10 top-0 left-0">
                 {
                     sidebar ? <div className="w-[320px] min-h-screen fixed bg-blue-200">
                         <div className="p-5 pt-20">
                             <div className="mb-12">
                                 {
-                                    user.photoURL ?
+                                    user?.photoURL ?
                                         <img className="w-[70px] h-[70px] mx-auto rounded-full" src={user.photoURL} /> :
                                         <img className="w-[70px] h-[70px] mx-auto rounded-full" src="https://i.ibb.co/VC1vhmp/user.png" />
                                 }
-                                <p className="text-xl text-center mt-2 font-semibold">{user.displayName}</p>
+                                <p className="text-xl text-center mt-2 font-semibold">{user?.displayName}</p>
                             </div>
                             <ul className="font-bold flex flex-col gap-4">
                                 {navlinks}
