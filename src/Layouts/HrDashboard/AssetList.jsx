@@ -1,23 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { FiEdit, FiTrash2, FiSearch } from "react-icons/fi";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../AuthProvider/AuthContext";
 
 const AssetList = () => {
+    const { user } = useContext(AuthContext);
     const [search, setSearch] = useState("");
-    const [assets, setAssets] = useState([]);
-    const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
-    useEffect(() => {
-        const fetchAssets = async () => {
-            try {
-                const res = await axiosPublic.get("/assets");
-                setAssets(res.data);
-            } catch (err) {
-                console.error("Error fetching user data:", err);
-            }
-        };
-        fetchAssets();
-    }, []);
+    const { data: assets = [] } = useQuery({
+        queryKey: ['assets', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/assets?email=${user?.email}`)
+            return res.data;
+        }
+    })
 
     // Filtered search
     const filteredAssets = assets?.filter((item) =>
