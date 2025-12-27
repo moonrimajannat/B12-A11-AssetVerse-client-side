@@ -5,8 +5,17 @@ import HrRegister from "../pages/HrRegister";
 import EmployeeRegister from "../pages/EmployeeRegister";
 import Login from "../pages/Login";
 import ErrorPage from "../pages/ErrorPage";
-import HrDashboard from "../Layouts/HrDashboard";
-import EmployeeDashboard from "../Layouts/EmployeeDashboard";
+import HrDashboard from "../Layouts/HrDashboard/HrDashboard";
+import EmployeeDashboard from "../Layouts/EmployeeDashboard/EmployeeDashboard";
+import AssetList from "../Layouts/HrDashboard/AssetList";
+import AddAsset from "../Layouts/HrDashboard/AddAsset";
+import AllRequests from "../Layouts/HrDashboard/AllRequests";
+import EmployeeList from "../Layouts/HrDashboard/EmployeeList";
+import UpgradePackage from "../Layouts/HrDashboard/UpgradePackage";
+import Profile from "../components/Shared/Profile";
+import MyAssets from "../Layouts/EmployeeDashboard/MyAssets";
+import MyTeam from "../Layouts/EmployeeDashboard/MyTeam";
+import RequestAsset from "../Layouts/EmployeeDashboard/RequestAsset";
 
 
 const router = createBrowserRouter([
@@ -40,27 +49,27 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "assetList",
-                element: <Home/>
+                element: <AssetList/>
             },
             {
                 path: "addAsset",
-                element: <Home/>
+                element: <AddAsset/>
             },
             {
                 path: "allRequests",
-                element: <Home/>
+                element: <AllRequests/>
             },
             {
                 path: "employeeList",
-                element: <Home/>
+                element: <EmployeeList/>
             },
             {
                 path: "upgradePackage",
-                element: <Home/>
+                element: <UpgradePackage/>
             },
             {
                 path: "profile",
-                element: <Home/>
+                element: <Profile/>
             },
 
         ]
@@ -71,19 +80,19 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "myAssets",
-                element: <Home/>
+                element: <MyAssets/>
             },
             {
                 path: "myTeam",
-                element: <Home/>
+                element: <MyTeam/>
             },
             {
                 path: "requestAsset",
-                element: <Home/>
+                element: <RequestAsset/>
             },
             {
                 path: "profile",
-                element: <Home/>
+                element: <Profile/>
             },
         ]
     },

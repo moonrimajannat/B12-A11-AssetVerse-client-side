@@ -52,7 +52,7 @@ const Navbar = () => {
                             {/* Employee Menu*/}
                             <li>
                                 <Link>Join as Employee</Link>
-                                {userData?.role === "employee" && (
+                                {(user && userData?.role === "employee") && (
                                     <ul className="p-2">
                                         <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
                                         <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
@@ -66,7 +66,7 @@ const Navbar = () => {
                             {/* HR Menu */}
                             <li>
                                 <Link>Join as HR Manager</Link>
-                                {userData?.role === "hr" && (
+                                {(user && userData?.role === "hr") && (
                                     <ul className="p-2">
                                         <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
                                         <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>
@@ -84,14 +84,14 @@ const Navbar = () => {
 
                 {/* Desktop  */}
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
+                    <ul className="menu z-10 menu-horizontal px-1">
                         <li><NavLink to="/">Home</NavLink></li>
 
                         {/* Employee Menu */}
                         <li>
                             <details>
                                 <summary>Join as Employee</summary>
-                                {userData?.role === "employee" && (
+                                {(user && userData?.role === "employee") && (
                                     <ul className="p-2">
                                         <li><NavLink to="/employeeDashboard/myAssets">My Assets</NavLink></li>
                                         <li><NavLink to="/employeeDashboard/myTeam">My Team</NavLink></li>
@@ -110,7 +110,7 @@ const Navbar = () => {
                             <details>
                                 <summary>Join as HR Manager</summary>
                                 {
-                                    userData?.role === "hr" && (
+                                    (user && userData?.role === "hr") && (
                                         <ul className="p-2">
                                             <li><NavLink to="/hrDashboard/assetList">Asset List</NavLink></li>
                                             <li><NavLink to="/hrDashboard/addAsset">Add Asset</NavLink></li>

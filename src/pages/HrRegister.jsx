@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdError } from "react-icons/md";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { AuthContext } from "../AuthProvider/AuthContext";
 import Swal from "sweetalert2";
@@ -16,6 +16,7 @@ const HrRegister = () => {
     const axiosPublic = useAxiosPublic();
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const location = useLocation();
     const navigate = useNavigate();
 
     const onSubmit = async (data) => {
@@ -56,7 +57,7 @@ const HrRegister = () => {
                 if (usersCreate.data) {
                     Swal.fire("Great!", "Registration have completed successfully.", "success");
 
-                    navigate("/");
+                    navigate(location?.state ? location.state : "/");
                 }
 
                 reset();
