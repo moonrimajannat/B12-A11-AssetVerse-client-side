@@ -3,19 +3,41 @@ import { FiEdit, FiTrash2, FiSearch } from "react-icons/fi";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../AuthProvider/AuthContext";
+import Swal from "sweetalert2";
 
 const AssetList = () => {
     const { user } = useContext(AuthContext);
     const [search, setSearch] = useState("");
     const axiosSecure = useAxiosSecure();
 
-    const { data: assets = [] } = useQuery({
+    const { data: assets = [], refetch } = useQuery({
         queryKey: ['assets', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/assets?email=${user?.email}`)
             return res.data;
         }
     })
+
+    // DELETE ASSET
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This asset will be deleted permanently!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#e63946",
+            cancelButtonColor: "#457b9d",
+            confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/assets/${id}`);
+                if (res.data.deletedCount > 0) {
+                    Swal.fire("Deleted!", "Asset has been removed.", "success");
+                    refetch();
+                }
+            }
+        });
+    };
 
     // Filtered search
     const filteredAssets = assets?.filter((item) =>
@@ -76,7 +98,9 @@ const AssetList = () => {
                                         <button className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition">
                                             <FiEdit size={18} />
                                         </button>
-                                        <button className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">
+                                        <button
+                                            onClick={() => handleDelete(asset._id)}
+                                            className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">
                                             <FiTrash2 size={18} />
                                         </button>
                                     </div>
