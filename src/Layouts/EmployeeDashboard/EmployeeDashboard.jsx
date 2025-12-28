@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { NavLink, Outlet } from "react-router";
 import { TiArrowForwardOutline } from "react-icons/ti";
 import { GrMenu } from "react-icons/gr";
+import { AuthContext } from "../../AuthProvider/AuthContext";
 
 const EmployeeDashboard = () => {
-    const user = "Moon";
+    const { user } = useContext(AuthContext);
     const [sidebar, setSidebar] = useState(false)
 
     const navlinks = <>
@@ -54,11 +55,11 @@ const EmployeeDashboard = () => {
                         <div className="p-5 pt-20">
                             <div className="mb-12">
                                 {
-                                    user.photoURL ?
-                                        <img className="w-[70px] h-[70px] mx-auto rounded-full" src={user.photoURL} /> :
+                                    user?.photoURL ?
+                                        <img className="w-[70px] h-[70px] mx-auto rounded-full" src={user?.photoURL} /> :
                                         <img className="w-[70px] h-[70px] mx-auto rounded-full" src="https://i.ibb.co/VC1vhmp/user.png" />
                                 }
-                                <p className="text-xl text-center mt-2 font-semibold">{user.displayName}</p>
+                                <p className="text-xl text-center mt-2 font-semibold">{user?.displayName}</p>
                             </div>
                             <ul className="font-bold flex flex-col gap-4">
                                 {navlinks}
@@ -72,11 +73,11 @@ const EmployeeDashboard = () => {
                 <div className="p-5 mt-20">
                     <div className="mb-12">
                         {
-                            user.photoURL ?
-                                <img className="w-[70px] h-[70px] mx-auto rounded-full" src={user.photoURL} /> :
+                            user?.photoURL ?
+                                <img className="w-[70px] h-[70px] mx-auto rounded-full" src={user?.photoURL} /> :
                                 <img className="w-[70px] h-[70px] mx-auto rounded-full" src="https://i.ibb.co/VC1vhmp/user.png" />
                         }
-                        <p className="text-xl text-center mt-2 font-semibold">{user.displayName}</p>
+                        <p className="text-xl text-center mt-2 font-semibold">{user?.displayName}</p>
                     </div>
                     <ul className="font-bold flex flex-col gap-4">
                         {navlinks}

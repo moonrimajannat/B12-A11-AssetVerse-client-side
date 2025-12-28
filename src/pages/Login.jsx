@@ -33,7 +33,7 @@ const Login = () => {
             <div className="rounded-2xl border-2 border-blue-400 w-full md:w-[500px] p-1">
                 <h1 className="text-4xl text-black text-center font-bold my-5">Login</h1>
 
-                <p className="text-sm text-center font-medium my-2">New here ? <Link to="/register"><span className="header text-base">Create a New Account</span></Link></p>
+                <p className="text-sm text-center font-medium my-2">New here ? <Link to="/employee-register"><span className="header text-base">Create a New Account</span></Link></p>
 
                 <form onSubmit={handleSignin} className="px-5 pt-5">
                     <div>

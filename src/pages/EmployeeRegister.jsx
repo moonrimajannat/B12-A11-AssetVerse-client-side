@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { AuthContext } from "../AuthProvider/AuthContext";
 import Swal from "sweetalert2";
+import { updateProfile } from "firebase/auth";
 
 const EmployeeRegister = () => {
     const { createUser } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const EmployeeRegister = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-     const onSubmit = async (data) => {
+    const onSubmit = async (data) => {
         const { name, dateOfBirth, role, email, password } = data;
 
         createUser(email, password)
@@ -32,11 +33,13 @@ const EmployeeRegister = () => {
                 console.log(usersCreate.data);
 
                 if (usersCreate.data) {
+                    await updateProfile(result.user, {
+                        displayName: name,
+                    });
                     Swal.fire("Great!", "Registration have completed successfully.", "success");
 
-                     navigate(location?.state ? location.state : "/");
+                    navigate(location?.state ? location.state : "/");
                 }
-
                 reset();
             })
             .catch(error => {

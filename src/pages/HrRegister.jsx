@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { AuthContext } from "../AuthProvider/AuthContext";
 import Swal from "sweetalert2";
+import { updateProfile } from "firebase/auth";
 
 //img upload
 const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -55,6 +56,9 @@ const HrRegister = () => {
                 console.log(usersCreate.data);
 
                 if (usersCreate.data) {
+                    await updateProfile(result.user, {
+                        displayName: name,
+                    });
                     Swal.fire("Great!", "Registration have completed successfully.", "success");
 
                     navigate(location?.state ? location.state : "/");
