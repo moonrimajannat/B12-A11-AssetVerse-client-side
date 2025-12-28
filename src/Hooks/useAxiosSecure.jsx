@@ -8,14 +8,16 @@ const axiosSecure = axios.create({
 })
 
 const useAxiosSecure = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, loading, logOut } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         // intercept request
         const reqInterceptor = axiosSecure.interceptors.request.use(config => {
-            config.headers.Authorization = `Bearer ${user?.accessToken}`
-            return config
+            if (!loading && user?.accessToken) {
+                config.headers.Authorization = `Bearer ${user?.accessToken}`;
+            }
+            return config;
         })
 
         // interceptor response
@@ -25,11 +27,9 @@ const useAxiosSecure = () => {
             console.log(error);
 
             const statusCode = error.status;
-            if (statusCode === 401 || statusCode === 403) {
-                logOut()
-                    .then(() => {
-                        navigate('/login')
-                    })
+           
+            if (!loading && (statusCode === 401 || statusCode === 403)) {
+                logOut().then(() => navigate("/login"));
             }
             return Promise.reject(error);
         })

@@ -6,7 +6,7 @@ import { AuthContext } from "../AuthProvider/AuthContext";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const { signinUser, setLogin } = use(AuthContext);
+    const { signinUser } = use(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -19,7 +19,6 @@ const Login = () => {
         signinUser(email, password)
             .then(() => {
                 Swal.fire("Good job", "Login successful", "success");
-                setLogin(true);
                 navigate(location?.state ? location.state : "/");
                 e.target.reset();
             })

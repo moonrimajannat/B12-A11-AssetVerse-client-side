@@ -39,6 +39,44 @@ const AssetList = () => {
         });
     };
 
+    // EDIT ASSET
+    const handleEdit = (asset) => {
+        Swal.fire({
+            title: "Edit Asset",
+            html: `
+        <input id="name" class="swal2-input" placeholder="Name" value="${asset.productName}" />
+        <input id="quantity" class="swal2-input" placeholder="Quantity" value="${asset.productQuantity}" />
+      `,
+            showCancelButton: true,
+            confirmButtonText: "Update",
+            focusConfirm: false,
+            preConfirm: () => {
+                const name = document.getElementById("name").value;
+                const quantity = document.getElementById("quantity").value;
+
+                if (!name || !quantity) {
+                    Swal.showValidationMessage("All fields are required");
+                }
+
+                return { name, quantity };
+            },
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const { name, quantity } = result.value;
+
+                const res = await axiosSecure.put(`/assets/${asset._id}`, {
+                    productName: name,
+                    productQuantity: quantity,
+                });
+
+                if (res.data.modifiedCount > 0) {
+                    Swal.fire("Updated!", "Asset updated successfully.", "success");
+                    refetch();
+                }
+            }
+        });
+    };
+
     // Filtered search
     const filteredAssets = assets?.filter((item) =>
         item?.productName?.toLowerCase().includes(search?.toLowerCase())
@@ -77,36 +115,48 @@ const AssetList = () => {
                     </thead>
 
                     <tbody>
-                        {filteredAssets?.map((asset, index) => (
-                            <tr
-                                key={asset._id}
-                                className={`${index !== filteredAssets.length - 1 ? "border-b" : ""} hover:bg-gray-50`}
-                            >
-                                <td className="p-4">
-                                    <img
-                                        src={asset.productImage}
-                                        alt={asset.productName}
-                                        className="w-14 h-14 rounded-md object-cover border"
-                                    />
-                                </td>
-                                <td className="p-4 font-medium">{asset.productName}</td>
-                                <td className="p-4">{asset.productType}</td>
-                                <td className="p-4">{asset.productQuantity}</td>
-                                <td className="p-4">{asset.addedDate}</td>
-                                <td className="p-4">
-                                    <div className="flex justify-center gap-3">
-                                        <button className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition">
-                                            <FiEdit size={18} />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDelete(asset._id)}
-                                            className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition">
-                                            <FiTrash2 size={18} />
-                                        </button>
-                                    </div>
+                        {filteredAssets.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" className="text-center py-10 text-gray-500 text-lg">
+                                    🚫 No products found
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            filteredAssets.map((asset, index) => (
+                                <tr
+                                    key={asset._id}
+                                    className={`${index !== filteredAssets.length - 1 ? "border-b" : ""} hover:bg-gray-50`}
+                                >
+                                    <td className="p-4">
+                                        <img
+                                            src={asset.productImage}
+                                            alt={asset.productName}
+                                            className="w-14 h-14 rounded-md object-cover border"
+                                        />
+                                    </td>
+                                    <td className="p-4 font-medium">{asset.productName}</td>
+                                    <td className="p-4">{asset.productType}</td>
+                                    <td className="p-4">{asset.productQuantity}</td>
+                                    <td className="p-4">{asset.dateAdded}</td>
+                                    <td className="p-4">
+                                        <div className="flex justify-center gap-3">
+                                            <button
+                                                onClick={() => handleEdit(asset)}
+                                                className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition"
+                                            >
+                                                <FiEdit size={18} />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(asset._id)}
+                                                className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition"
+                                            >
+                                                <FiTrash2 size={18} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
