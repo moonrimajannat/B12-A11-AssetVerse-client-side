@@ -42,6 +42,7 @@ const HrRegister = () => {
 
                 const userInfo = {
                     name: name,
+                    profileImage:"",
                     companyName: companyName,
                     companyLogo: imageUrl,
                     email: email,
@@ -53,7 +54,6 @@ const HrRegister = () => {
                     subscription: subscription,
                 }
                 const usersCreate = await axiosPublic.post("/users", userInfo);
-                console.log(usersCreate.data);
 
                 if (usersCreate.data) {
                     await updateProfile(result.user, {

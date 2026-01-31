@@ -5,46 +5,58 @@ import { NavLink, Outlet } from "react-router";
 import { TiArrowForwardOutline } from "react-icons/ti";
 import { GrMenu } from "react-icons/gr";
 import { AuthContext } from "../../AuthProvider/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 const HrDashboard = () => {
     const { user } = useContext(AuthContext);
     const [sidebar, setSidebar] = useState(false);
 
+    const { data: users = {}} = useQuery({
+        queryKey: ["users", user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user?.email}`);
+            return res.data;
+        },
+        enabled: !!user?.email,
+    });
+
+    const avatarSrc = users?.profileImage;
+
     const navlinks = <>
         <li>
             <NavLink to="/hrDashboard/assetList" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> Asset List
+                <TiArrowForwardOutline className="text-xl inline" /> Asset List
             </NavLink>
         </li>
         <li>
             <NavLink to="/hrDashboard/addAsset" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> Add an Asset
+                <TiArrowForwardOutline className="text-xl inline" /> Add an Asset
             </NavLink>
         </li>
         <li>
             <NavLink to="/hrDashboard/allRequests" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> All Requests
+                <TiArrowForwardOutline className="text-xl inline" /> All Requests
             </NavLink>
         </li>
         <li>
             <NavLink to="/hrDashboard/employeeList" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> My Employee List
+                <TiArrowForwardOutline className="text-xl inline" /> My Employee List
             </NavLink>
         </li>
         <li>
             <NavLink to="/hrDashboard/upgradePackage" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> Upgrade Package
+                <TiArrowForwardOutline className="text-xl inline" /> Upgrade Package
             </NavLink>
         </li>
         <li>
             <NavLink to="/hrDashboard/profile" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <FaRegUser className="text-lg inline mb-2"/> Profile
+                <FaRegUser className="text-lg inline mb-2" /> Profile
             </NavLink>
         </li>
 
@@ -67,8 +79,8 @@ const HrDashboard = () => {
                         <div className="p-5 pt-20">
                             <div className="mb-12">
                                 {
-                                    user?.photoURL ?
-                                        <img className="w-[70px] h-[70px] mx-auto rounded-full" src={user?.photoURL} /> :
+                                    avatarSrc?
+                                        <img className="w-[70px] h-[70px] mx-auto rounded-full" src={avatarSrc} /> :
                                         <img className="w-[70px] h-[70px] mx-auto rounded-full" src="https://i.ibb.co/VC1vhmp/user.png" />
                                 }
                                 <p className="text-xl text-center mt-2 font-semibold">{user?.displayName}</p>
@@ -80,7 +92,7 @@ const HrDashboard = () => {
                     </div> : ""
                 }
             </div>
-            
+
             <div className="hidden lg:block w-[320px] fixed min-h-screen bg-blue-200">
                 <div className="p-5 mt-20">
                     <div className="mb-12">
@@ -100,7 +112,7 @@ const HrDashboard = () => {
             <div className="flex-1">
                 <Outlet></Outlet>
             </div>
-             <button onClick={() => setSidebar(!sidebar)} className="btn lg:hidden block text-white text-xl btn-info"><GrMenu /></button>
+            <button onClick={() => setSidebar(!sidebar)} className="btn lg:hidden block text-white text-xl btn-info"><GrMenu /></button>
         </div>
     );
 };

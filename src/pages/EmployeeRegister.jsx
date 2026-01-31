@@ -24,6 +24,7 @@ const EmployeeRegister = () => {
 
                 const userInfo = {
                     name: name,
+                    profileImage:"",
                     email: email,
                     password: password,
                     dateOfBirth: dateOfBirth,

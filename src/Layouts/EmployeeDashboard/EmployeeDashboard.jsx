@@ -5,34 +5,46 @@ import { NavLink, Outlet } from "react-router";
 import { TiArrowForwardOutline } from "react-icons/ti";
 import { GrMenu } from "react-icons/gr";
 import { AuthContext } from "../../AuthProvider/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 const EmployeeDashboard = () => {
     const { user } = useContext(AuthContext);
-    const [sidebar, setSidebar] = useState(false)
+    const [sidebar, setSidebar] = useState(false);
+
+    const { data: users = {} } = useQuery({
+        queryKey: ["users", user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/${user?.email}`);
+            return res.data;
+        },
+        enabled: !!user?.email,
+    });
+
+    const avatarSrc = users?.profileImage;
 
     const navlinks = <>
         <li>
             <NavLink to="/employeeDashboard/myAssets" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> My Assets
+                <TiArrowForwardOutline className="text-xl inline" /> My Assets
             </NavLink>
         </li>
         <li>
             <NavLink to="/employeeDashboard/myTeam" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> My Team
+                <TiArrowForwardOutline className="text-xl inline" /> My Team
             </NavLink>
         </li>
         <li>
             <NavLink to="/employeeDashboard/requestAsset" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <TiArrowForwardOutline className="text-xl inline"/> Request an Asset
+                <TiArrowForwardOutline className="text-xl inline" /> Request an Asset
             </NavLink>
         </li>
         <li>
             <NavLink to="/employeeDashboard/profile" className={({ isActive, isPending }) =>
                 isActive ? "active rounded-lg py-2 pl-3 pr-[70px] bg-blue-800 text-white" : isPending ? "pending" : ""}>
-                <FaRegUser className="text-lg inline mb-2"/> Profile
+                <FaRegUser className="text-lg inline mb-2" /> Profile
             </NavLink>
         </li>
 
@@ -48,15 +60,15 @@ const EmployeeDashboard = () => {
     </>
 
     return (
-        <div className="flex bg-blue-100 lg:p-0 p-5">
+        <div className="flex lg:p-0 p-5">
             <div className="absolute z-10 top-0 left-0">
                 {
                     sidebar ? <div className="w-[320px] min-h-screen fixed bg-blue-200">
                         <div className="p-5 pt-20">
                             <div className="mb-12">
                                 {
-                                    user?.photoURL ?
-                                        <img className="w-[70px] h-[70px] mx-auto rounded-full" src={user?.photoURL} /> :
+                                    avatarSrc ?
+                                        <img className="w-[70px] h-[70px] mx-auto rounded-full" src={avatarSrc} /> :
                                         <img className="w-[70px] h-[70px] mx-auto rounded-full" src="https://i.ibb.co/VC1vhmp/user.png" />
                                 }
                                 <p className="text-xl text-center mt-2 font-semibold">{user?.displayName}</p>
@@ -68,7 +80,7 @@ const EmployeeDashboard = () => {
                     </div> : ""
                 }
             </div>
-            
+
             <div className="hidden lg:block w-[320px] fixed min-h-screen bg-blue-200">
                 <div className="p-5 mt-20">
                     <div className="mb-12">
@@ -88,7 +100,7 @@ const EmployeeDashboard = () => {
             <div className="flex-1">
                 <Outlet></Outlet>
             </div>
-             <button onClick={() => setSidebar(!sidebar)} className="btn lg:hidden block text-white text-xl btn-info"><GrMenu /></button>
+            <button onClick={() => setSidebar(!sidebar)} className="btn lg:hidden block text-white text-xl btn-info"><GrMenu /></button>
         </div>
     );
 };

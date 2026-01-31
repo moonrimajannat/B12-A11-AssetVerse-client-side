@@ -2,7 +2,6 @@ import { Outlet, useLocation } from "react-router";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-
 const Root = () => {
     const location = useLocation();
     const noHeader = location.pathname.includes('login') || location.pathname.includes('employee-register') ||
