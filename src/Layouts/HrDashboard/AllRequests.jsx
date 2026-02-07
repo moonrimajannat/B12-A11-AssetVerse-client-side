@@ -2,6 +2,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider/AuthContext";
+import Swal from "sweetalert2";
 
 const AllRequests = () => {
     const { user } = useContext(AuthContext);
@@ -14,6 +15,38 @@ const AllRequests = () => {
             return res.data;
         }
     })
+
+    const handleApprove = async (request) => {
+        const confirm = await Swal.fire({
+            title: "Approve this request?",
+            text: "This will deduct asset quantity",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, approve",
+        });
+
+        if (!confirm.isConfirmed) return;
+
+        const res = await axiosSecure.patch(
+            `/asset-requests/approve/${request._id}`
+        );
+
+        if (res.data.modifiedCount > 0) {
+            Swal.fire("Approved!", "Asset assigned successfully", "success");
+            refetch();
+        }
+    };
+
+    const handleReject = async (id) => {
+        const res = await axiosSecure.patch(`/asset-requests/reject/${id}`);
+
+        if (res.data.modifiedCount > 0) {
+            Swal.fire("Rejected", "Request has been rejected", "info");
+            refetch();
+        }
+    };
+
+
 
     return (
         <div className="lg:ml-[350px] mt-20 lg:mt-10 p-6">
