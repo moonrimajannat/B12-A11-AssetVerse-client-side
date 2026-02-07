@@ -47,11 +47,15 @@ const Profile = () => {
             </div>
 
             {/* Company Affiliations */}
-            <div className="lg:ml-20 mt-10">
-                <h3 className="text-lg font-semibold mb-3">Company Affiliations</h3>
+            {
+                profile?.role === "employee" && (
+                    <div className="lg:ml-20 mt-10">
+                        <h3 className="text-lg font-semibold mb-3">Company Affiliations</h3>
 
-                <p className="text-gray-500">No company affiliations</p>
-            </div>
+                        <p className="text-gray-500">No company affiliations</p>
+                    </div>
+                )
+            }
 
             {/* Modal */}
             {
