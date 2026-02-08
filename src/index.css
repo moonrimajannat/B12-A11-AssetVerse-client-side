@@ -11,3 +11,10 @@
   font-weight: 400;
   font-style: normal;
 }
+
+
+@media print {
+  button, input, select {
+    display: none;
+  }
+}
