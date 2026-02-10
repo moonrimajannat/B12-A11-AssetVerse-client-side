@@ -28,6 +28,10 @@ const Profile = () => {
         },
     });
 
+    const uniqueCompanies = [
+        ...new Map(companies.map(c => [c.companyName, c])).values(),
+    ];
+
     return (
         <div className="lg:ml-64 mx-auto mt-16 lg:px-6">
             {/* Header */}
@@ -62,8 +66,8 @@ const Profile = () => {
                         <h3 className="text-lg font-semibold mb-3">Company Affiliations</h3>
 
                         <p className="text-gray-500">
-                            {companies && companies.length > 0
-                                ? companies.map(c => c.companyName).join(" , ")
+                            {uniqueCompanies && uniqueCompanies.length > 0
+                                ? uniqueCompanies.map(c => c.companyName).join(" , ")
                                 : "No company affiliations"}
                         </p>
                     </div>

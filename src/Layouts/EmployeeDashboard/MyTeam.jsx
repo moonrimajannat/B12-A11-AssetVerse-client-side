@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthContext";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const MyTeam = () => {
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
     const [selectedCompany, setSelectedCompany] = useState("");
 
     // Fetch companies user belongs to
@@ -17,12 +19,16 @@ const MyTeam = () => {
         },
     });
 
+    const uniqueCompanies = [
+        ...new Map(companies.map(c => [c.companyName, c])).values(),
+    ];
+
     // Fetch team members
     const { data: team = [] } = useQuery({
         queryKey: ["my-team", selectedCompany],
         enabled: !!selectedCompany,
         queryFn: async () => {
-            const res = await axiosSecure.get(
+            const res = await axiosPublic.get(
                 `/my-team?company=${selectedCompany}`
             );
             return res.data;
@@ -48,7 +54,7 @@ const MyTeam = () => {
                     onChange={(e) => setSelectedCompany(e.target.value)}
                 >
                     <option value="">Select Company</option>
-                    {companies.map(c => (
+                    {uniqueCompanies.map(c => (
                         <option key={c.companyName} value={c.companyName}>
                             {c.companyName}
                         </option>
