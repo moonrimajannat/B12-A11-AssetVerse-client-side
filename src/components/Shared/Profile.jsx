@@ -19,6 +19,15 @@ const Profile = () => {
         },
     });
 
+    // Fetch companies user belongs to
+    const { data: companies = [] } = useQuery({
+        queryKey: ["my-companies", user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/my-companies?email=${user?.email}`);
+            return res.data;
+        },
+    });
+
     return (
         <div className="lg:ml-64 mx-auto mt-16 lg:px-6">
             {/* Header */}
@@ -52,7 +61,11 @@ const Profile = () => {
                     <div className="lg:ml-20 mt-10">
                         <h3 className="text-lg font-semibold mb-3">Company Affiliations</h3>
 
-                        <p className="text-gray-500">No company affiliations</p>
+                        <p className="text-gray-500">
+                            {companies && companies.length > 0
+                                ? companies.map(c => c.companyName).join(" , ")
+                                : "No company affiliations"}
+                        </p>
                     </div>
                 )
             }
